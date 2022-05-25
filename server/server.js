@@ -13,12 +13,11 @@ const maria = require('./database/connect/maria');
 
 app.use("/notice",noticeRouter);
 
-
 const PORT = 8080;
 
-app.use(cors()); // cors 미들웨어를 삽입합니다.
+app.use(cors());
 
-app.get('/', (req,res) => { // 요청패스에 대한 콜백함수를 넣어줍니다.
+app.get('/', (req,res) => {
   res.send({message:'hello'});
 });
 

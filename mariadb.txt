@@ -2,58 +2,59 @@
 기본키, 등급, 이름, 학번
 
 공지사항 테이블
-기본키(번호), 작성자(외래키-학생), 제목, 내용, 작성일자, 변경 비밀번호 
+기본키(번호), 작성자(외래키-학생), 제목, 내용, 작성일자, 변경 비밀번호
 
 랭킹 테이블(사실 안 만들어도됨)
 월간, 주간, 일간
-기본키(번호), 학생(외래키-학생), 전 포인트(전월,전주,전일), 현재 포인트 
+기본키(번호), 학생(외래키-학생), 전 포인트(전월,전주,전일), 현재 포인트
 
 포인트 테이블
-기본키(번호), 학생(외래키-학생), 종류(외래키-포인트종류), 포인트, 일자, 
+기본키(번호), 학생(외래키-학생), 종류(외래키-포인트종류), 포인트, 일자,
 
 포인트 종류 테이블
 기본키(번호), 포인트 이름
 
 시간표 테이블
-기본키(번호), 학생(외래키-학생), 종류, 일자, 비밀번호 
+기본키(번호), 학생(외래키-학생), 종류, 일자, 비밀번호
 
+CREATE DATABASE CECOM_PAGE;
 
 CREATE USER 'CECOM'@'%' identified by '2579*2579*';
 
-GRANT ALL privileges on cecom_page.* to 'CECOM'@'%';
+GRANT ALL privileges on CECOM_PAGE.* to 'CECOM'@'%';
 
 USE CECOM_PAGE;
 
 CREATE TABLE student(
-    student_key INT NOT NULL AUTO_INCREMENT,  
-    name VARCHAR(10) NOT NULL,  
-    id VARCHAR(12) NOT NULL,  
-    isadmin INT NULL DEFAULT NULL,  
-    admission_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,  
+    student_key INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(10) NOT NULL,
+    id VARCHAR(12) NOT NULL,
+    isadmin INT NULL DEFAULT NULL,
+    admission_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY ( student_key )
 );
 
 CREATE TABLE notice(
-    notice_key INT NOT NULL AUTO_INCREMENT,  
-    writer_key INT NOT NULL,  
-    title VARCHAR() NOT NULL,  
-    content VARCHAR(),
+    notice_key INT NOT NULL AUTO_INCREMENT,
+    writer_key INT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    content TEXT,
     date DATE NOT NULL,
-    password VARCHAR NOT NULL,  
+    password VARCHAR(30) NOT NULL,
     PRIMARY KEY ( notice_key ),
     FOREIGN KEY(writer_key) REFERENCES student(student_key)
 );
-
+///////////////////////////////////////////////////////////////////////////////////////////
 CREATE TABLE point_kind(
-    point_kind_key INT NOT NULL AUTO_INCREMENT,  
+    point_kind_key INT NOT NULL AUTO_INCREMENT,
     kind_name VARCHAR() NOT NULL,
     PRIMARY KEY ( point_kind_key )
 );
 
 CREATE TABLE point(
-    point_key INT NOT NULL AUTO_INCREMENT,  
-    student_key INT NOT NULL,  
-    kind INT NOT NULL,  
+    point_key INT NOT NULL AUTO_INCREMENT,
+    student_key INT NOT NULL,
+    kind INT NOT NULL,
     point INT NOT NULL,
     date DATE NOT NULL,
     PRIMARY KEY ( point_key ),
@@ -62,13 +63,11 @@ CREATE TABLE point(
 );
 
 CREATE TABLE schedule(
-    schedule_key INT NOT NULL AUTO_INCREMENT,  
-    student_key INT NOT NULL,  
-    kind INT NOT NULL,  
+    schedule_key INT NOT NULL AUTO_INCREMENT,
+    student_key INT NOT NULL,
+    kind INT NOT NULL,
     date DATE NOT NULL,
     password VARCHAR() NOT NULL,
     PRIMARY KEY (schedule_key),
     FOREIGN KEY(student_key) REFERENCES student(student_key)
 );
-
-
